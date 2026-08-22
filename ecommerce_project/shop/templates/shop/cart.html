@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cart</title>
+<style>
+body { font-family: 'Segoe UI', Arial; padding: 20px; background: #f5f7ff; }
+h1 { color: #333; }
+.item { background: white; border: none; padding: 20px; margin-bottom: 15px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display:flex; justify-content:space-between; align-items:center; }
+.btn-qty { background:#eef0ff; padding:6px 12px; text-decoration:none; border-radius:8px; font-weight:bold; color:#4a4cff; border:1px solid #d0d4ff; }
+.btn-qty:hover { background:#4a4cff; color:white; }
+.btn-remove { color:white; background:#ff4d4d; padding:7px 14px; border-radius:8px; text-decoration:none; font-size:13px; }
+.btn-remove:hover { background:#e60000; }
+.total-box { background:white; padding:20px; border-radius:15px; margin-top:20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); text-align:right; }
+.btn-order { background:#00b14f; color:white; padding:12px 25px; border-radius:10px; text-decoration:none; font-weight:bold; font-size:16px; display:inline-block; margin-top:10px;}
+.btn-order:hover { background:#009640; }
+a.back { text-decoration:none; color:#4a4cff; font-weight:500; }
+</style>
+</head>
+<body>
+<h1>Your Cart 🛒</h1>
+<a href="/" class="back">← Back to Shopping</a>
+<hr style="border:none; border-top:1px solid #ddd; margin:15px 0;">
+
+{% for item in cart_items %}
+<div class="item">
+  <div>
+    <h3 style="margin:0 0 5px 0;">{{ item.product.name }}</h3>
+    <p style="margin:5px 0; color:#666;">Price: ₹{{ item.product.price }}</p>
+    <p style="margin:10px 0;">
+      <a href="/decrease/{{ item.id }}/" class="btn-qty"> - </a>
+      <b style="margin:0 12px; font-size:18px;"> {{ item.quantity }} </b>
+      <a href="/increase/{{ item.id }}/" class="btn-qty"> + </a>
+    </p>
+    <p style="margin:5px 0;"><b>Total: ₹{% widthratio item.product.price 1 item.quantity %}</b></p>
+    <a href="/remove/{{ item.id }}/" class="btn-remove">❌ Remove</a>
+  </div>
+</div>
+{% empty %}
+<h2 style="text-align:center; margin-top:50px; color:#888;">Your cart is empty 😔</h2>
+{% endfor %}
+
+{% if cart_items %}
+<div class="total-box">
+  <h2 style="margin:0;">Grand Total: ₹{{ total }}</h2>
+  <a href="/checkout/" class="btn-order">Place Order ✅</a>
+</div>
+{% endif %}
+</body>
+</html>
