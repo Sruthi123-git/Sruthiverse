@@ -1,0 +1,20 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+<div style="max-width:600px; margin:20px auto; padding:20px; border:1px solid #ddd; border-radius:10px;">
+    <h2>Checkout</h2>
+    <p>Total Amount: <b>₹{{ total }}</b></p>
+    <hr>
+    <form method="POST">
+        {% csrf_token %}
+        <label><b>Full Address:</b></label><br>
+        <textarea name="address" required placeholder="Intinti address rayandi" style="width:100%; padding:10px; height:80px; margin-top:5px;"></textarea><br><br>
+        
+        <label><b>Phone Number:</b></label><br>
+        <input type="text" name="phone" required placeholder="9XXXXXXXXX" style="width:100%; padding:10px; margin-top:5px;"><br><br>
+        
+        <button type="submit" style="width:100%; padding:12px; background:black; color:white; border:none; border-radius:5px; cursor:pointer;">
+            Place Order
+        </button>
+    </form>
+</div>
+{% endblock %}

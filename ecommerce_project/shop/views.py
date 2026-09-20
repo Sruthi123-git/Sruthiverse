@@ -27,11 +27,23 @@ def checkout(request):
     if not cart_items:
         return redirect('home')
     
+    if request.method == 'POST':
+        address = request.POST.get('address')
+        phone = request.POST.get('phone')
+        total = sum(item.product.price * item.quantity for item in cart_items)
+        
+        Order.objects.create(
+            user=request.user,
+            total_price=total,
+            address=address,
+            phone=phone,
+            status="Pending"
+        )
+        cart_items.delete()
+        return render(request, 'shop/success.html', {'total': total})
+
     total = sum(item.product.price * item.quantity for item in cart_items)
-    
-    
-    
-    cart_items.delete()
+    return render(request, 'shop/checkout.html', {'cart_items': cart_items, 'total': total})
     
     return render(request, 'shop/success.html', {'total': total})
 @login_required(login_url='/admin/login/')
